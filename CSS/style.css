@@ -2,6 +2,7 @@
     --primary-color: #302AE6;
     --secondary-color: #536390;
     --font-color: #0d0d0d;
+    --font-color-opposite: #f6f6f6;
     --bg-color: #ffffff;
     --bg-color-alternate: #cccccc;
     --highlight-color: #b9d7f8;
@@ -16,6 +17,7 @@
     --primary-color: #9A97F3;
     --secondary-color: #818cab;
     --font-color: #f6f6f6;
+    --font-color-opposite: #0d0d0d;
     --bg-color: #1a1a1a;
     --bg-color-alternate: #333333;
     --highlight-color: #072446;
@@ -410,3 +412,42 @@ code {
 .dropdown:hover .dropdown-content {
   display:block;
 }
+
+.tab {
+  border: 1px solid #ccc;
+  background-color: var(--bg-color-alternate);
+}
+.tab-buttons{
+  display:flex;
+}
+
+/* Style the buttons that are used to open the tab content */
+.tab button {
+  background-color: inherit;
+  color: var(--font-color);
+  background-color: var(--bg-color);
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: var(--highlight-color);
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+  background-color: var(--highlight-color);
+}
+
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-top: none;
+}
+
