@@ -5,6 +5,7 @@
     --font-color-opposite: #f6f6f6;
     --bg-color: #ffffff;
     --bg-color-alternate: #cccccc;
+    --bg-color-alternate-2: #a2a2a2;
     --highlight-color: #b9d7f8;
     --heading-color: #000000;
     --status-complete-color: #009933;
@@ -20,6 +21,7 @@
     --font-color-opposite: #0d0d0d;
     --bg-color: #1a1a1a;
     --bg-color-alternate: #333333;
+    --bg-color-alternate-2: #7d797a;
     --highlight-color: #072446;
     --heading-color: #ffffff;
     --status-complete-color: #00ff55;
@@ -451,3 +453,17 @@ code {
   border-top: none;
 }
 
+.habit {
+  display: block;
+  padding-left: 2em;
+  overflow-wrap: anywhere;
+  margin: 0.5em auto;
+}
+
+.toggle-habit {
+  margin-left: -2em;
+}
+
+.modification-buttons {
+  margin-top: 2em;
+}
