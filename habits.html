@@ -26,14 +26,8 @@
           </a>
         </div>
         <ul class="navigation-menu">
-          <a href="test.html" class="menu-item">
-            <li class="underline-hover-effect">Test</li>
-          </a>
-          <a href="test.html" class="menu-item">
-            <li class="underline-hover-effect">Test</li>
-          </a>
-          <a href="test.html" class="menu-item">
-            <li class="underline-hover-effect">Test</li>
+          <a href="./habits.html" class="menu-item">
+            <li class="underline-hover-effect">Habits</li>
           </a>
           <div class="menu-item dropdown login">
             <li class="underline-hover-effect">Log In</li>
@@ -63,90 +57,99 @@
       </div>
       <hr id="head-rule">
     </div>
-    <div class="tab">
-      <div class="tab-buttons">
-        <button class="tablinks" id="defaultOpen" onclick="openTab(event, 'Daily')">Daily</button>
-        <button class="tablinks" onclick="openTab(event, 'Weekly')">Weekly</button>
-        <button class="tablinks" onclick="openTab(event, 'Monthly')">Monthly</button>
-        <button class="tablinks" onclick="openTab(event, 'Yearly')">Yearly</button>
-        <button class="tablinks" onclick="openTab(event, 'One-time')">One Time</button>
+    <div class="content">
+      <div class="tab">
+        <div class="tab-buttons">
+          <button class="tablinks" id="defaultOpen" onclick="openTab(event, 'Daily')">Daily</button>
+          <button class="tablinks" onclick="openTab(event, 'Weekly')">Weekly</button>
+          <button class="tablinks" onclick="openTab(event, 'Monthly')">Monthly</button>
+          <button class="tablinks" onclick="openTab(event, 'Yearly')">Yearly</button>
+          <button class="tablinks" onclick="openTab(event, 'One-time')">One Time</button>
+        </div>
+        <!-- Tab content -->
+        <div id="Daily" class="tabcontent">
+          <h3>Daily</h3>
+          <div class="habit-content">
+            <label class="habit">
+              <input type="checkbox" class="toggle-habit" id="habit-x" name="habit-x">
+              This habit is to do...
+            </label>
+          </div>
+          <div class="modification-buttons">
+            <button class="add-new-habit">Add New Habit</button>
+            <button class="submit-habits">Submit Changes</button>
+          </div>
+        </div>
+        <div id="Weekly" class="tabcontent">
+          <h3>Weekly</h3>
+          <div class="habit-content">
+            <label class="habit">
+              <input type="checkbox" class="toggle-habit" id="habit-xx" name="habit-xx">
+              This habit is to do...
+            </label>
+          </div>
+          <div class="modification-buttons">
+            <button class="add-new-habit">Add New Habit</button>
+            <button class="submit-habits">Submit Changes</button>
+          </div>
+        </div>
+        <div id="Monthly" class="tabcontent">
+          <h3>Monthly</h3>
+          <div class="habit-content">
+            <label class="habit">
+              <input type="checkbox" class="toggle-habit" id="habit-xxx" name="habit-xxx">
+              This habit is to do...
+            </label>
+          </div>
+          <div class="modification-buttons">
+            <button class="add-new-habit">Add New Habit</button>
+            <button class="submit-habits">Submit Changes</button>
+          </div>
+        </div>
+        <div id="Yearly" class="tabcontent">
+          <h3>Yearly</h3>
+          <div class="habit-content">
+            <label class="habit">
+              <input type="checkbox" class="toggle-habit" id="habit-xxxx" name="habit-xxxx">
+              This habit is to do...
+            </label>
+          </div>
+          <div class="modification-buttons">
+            <button class="add-new-habit">Add New Habit</button>
+            <button class="submit-habits">Submit Changes</button>
+          </div>
+        </div>
+        <div id="One-time" class="tabcontent">
+          <h3>One Time</h3>
+          <div class="habit-content">
+            <label class="habit">
+              <input type="checkbox" class="toggle-habit" id="habit-xxxxx" name="habit-xxxxx">
+              This habit is to do...
+            </label>
+          </div>
+          <div class="modification-buttons">
+            <button class="add-new-habit">Add New Habit</button>
+            <button class="submit-habits">Submit Changes</button>
+          </div>
+        </div>
+        <script>
+          // Get the element with id="defaultOpen" and click on it
+          document.getElementById("defaultOpen").click();
+        </script>
       </div>
-      <!-- Tab content -->
-      <div id="Daily" class="tabcontent">
-        <h3>Daily</h3>
-        <div class="habit-content">
-          <label class="habit">
-            <input type="checkbox" class="toggle-habit" id="habit-x" name="habit-x">
-            This habit is to do...
-          </label>
-        </div>
-        <div class="modification-buttons">
-          <button class="add-new-habit">Add New Habit</button>
-          <button class="submit-habits">Submit Changes</button>
-        </div>
-      </div>
-      <div id="Weekly" class="tabcontent">
-        <h3>Weekly</h3>
-        <div class="habit-content">
-          <label class="habit">
-            <input type="checkbox" class="toggle-habit" id="habit-xx" name="habit-xx">
-            This habit is to do...
-          </label>
-        </div>
-        <div class="modification-buttons">
-          <button class="add-new-habit">Add New Habit</button>
-          <button class="submit-habits">Submit Changes</button>
-        </div>
-      </div>
-      <div id="Monthly" class="tabcontent">
-        <h3>Monthly</h3>
-        <div class="habit-content">
-          <label class="habit">
-            <input type="checkbox" class="toggle-habit" id="habit-xxx" name="habit-xxx">
-            This habit is to do...
-          </label>
-        </div>
-        <div class="modification-buttons">
-          <button class="add-new-habit">Add New Habit</button>
-          <button class="submit-habits">Submit Changes</button>
-        </div>
-      </div>
-      <div id="Yearly" class="tabcontent">
-        <h3>Yearly</h3>
-        <div class="habit-content">
-          <label class="habit">
-            <input type="checkbox" class="toggle-habit" id="habit-xxxx" name="habit-xxxx">
-            This habit is to do...
-          </label>
-        </div>
-        <div class="modification-buttons">
-          <button class="add-new-habit">Add New Habit</button>
-          <button class="submit-habits">Submit Changes</button>
-        </div>
-      </div>
-      <div id="One-time" class="tabcontent">
-        <h3>One Time</h3>
-        <div class="habit-content">
-          <label class="habit">
-            <input type="checkbox" class="toggle-habit" id="habit-xxxxx" name="habit-xxxxx">
-            This habit is to do...
-          </label>
-        </div>
-        <div class="modification-buttons">
-          <button class="add-new-habit">Add New Habit</button>
-          <button class="submit-habits">Submit Changes</button>
-        </div>
-      </div>
-      <script>
-        // Get the element with id="defaultOpen" and click on it
-        document.getElementById("defaultOpen").click();
-      </script>
     </div>
     <script src="" async defer></script>
     <hr id="foot-rule">
   </body>
   <footer>
-    <p>Last updated: <span>7 October 2025</span></p>
-    <p>Author: Josh Gillum</p>
+    <div class="split-items">
+      <p>Last updated: <span>7 October 2025</span></p>
+      <p>Author: Josh Gillum</p>
+    </div>
+    <div class="split-items">
+      <a href="./cookies.html">cookies</a>
+      <a href="./privacy.html">privacy policy</a>
+      <a href="./terms.html">terms and conditions</a>
+    </div>
   </footer>
 </html>
