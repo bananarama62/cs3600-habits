@@ -388,6 +388,10 @@ code {
   margin: auto;
 }
 
+.habit-items {
+  display:flex;
+}
+
 .status-active span {
     color: var(--status-active-color);
 }
@@ -457,7 +461,7 @@ code {
   display: block;
   padding-left: 2em;
   overflow-wrap: anywhere;
-  margin: 0.5em auto;
+  margin: 0.5em auto 0.5em 0px;
 }
 
 .toggle-habit {
@@ -466,4 +470,8 @@ code {
 
 .modification-buttons {
   margin-top: 2em;
+}
+
+.habit-modification-buttons {
+  margin-left: 1em;
 }

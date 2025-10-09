@@ -27,11 +27,13 @@ function addHabit(tabName){
   console.log(prefix);
 
 
+
   if (content.children.length > 0){
     const id_numbers = [];
     // Gets the id numbers of all habits in the list
     for(var i=0; i< content.children.length; i++){
-      var text = content.children[i].firstElementChild.id;
+      console.log(content.children[i]);
+      var text = content.children[i].firstElementChild.firstElementChild.id;
       console.log("text: " + text);
       var cut = text.indexOf("-");
       if (cut >= 0){
@@ -44,10 +46,14 @@ function addHabit(tabName){
     new_id = id_numbers[id_numbers.length-1]+1; // Defaults to just incrementing last id by 1
     console.log(new_id);
     // Searches for gaps in id numbers to fill
-    for(var i=0; i < id_numbers.length-1;++i){
-      if(id_numbers[i]+1 < id_numbers[i+1]){
-        new_id = id_numbers[i]+1;
-        break;
+    if(id_numbers[0] > 0){
+      new_id = 0;
+    } else {
+      for(var i=0; i < id_numbers.length-1;++i){
+        if(id_numbers[i]+1 < id_numbers[i+1]){
+          new_id = id_numbers[i]+1;
+          break;
+        }
       }
     }
   }
@@ -65,5 +71,30 @@ function addHabit(tabName){
   label.appendChild(input);
   label.appendChild(placeholder);
 
-  content.appendChild(label);
+  // Creates the HTML elements that house the buttons for modifying and deleting elements
+  const button_div = document.createElement("div");
+  button_div.classList.add("habit-modification-buttons");
+  button_div.classList.add("flex");
+  const modify_button = document.createElement("button");
+  modify_button.innerText="Modify";
+
+  const delete_button = document.createElement("button");
+  delete_button.innerText="Delete";
+  delete_button.setAttribute("onclick","removeHabit('"+input.id+"')");
+  
+  button_div.appendChild(modify_button);
+  button_div.appendChild(delete_button);
+
+  // Wrapper div
+  const wrapper_div = document.createElement("div");
+  wrapper_div.classList.add("flex");
+  
+  wrapper_div.appendChild(label);
+  wrapper_div.appendChild(button_div);
+
+  content.appendChild(wrapper_div);
+}
+
+function removeHabit(habitId){
+  input = document.getElementById(habitId).parentElement.parentElement.remove();
 }
