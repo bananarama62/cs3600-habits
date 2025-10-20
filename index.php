@@ -20,14 +20,11 @@
     <div>
       <div class="navigation-head">
         <div class="site-logo">
-          <a href="./index.html">
+          <a href="./index.php">
             <h1>Habits</h1>
           </a>
         </div>
         <ul class="navigation-menu">
-          <a href="./habits.php" class="menu-item">
-            <li class="underline-hover-effect">Habits</li>
-          </a>
           <?php
           session_start();
           // Check if user is logged in, if not redirect to login page
@@ -39,6 +36,9 @@
               echo '<li class="underline-hover-effect">Register</li>';
             echo '</a>';
           } else {
+            echo '<a href="./habits.php" class="menu-item">';
+              echo '<li class="underline-hover-effect">Habits</li>';
+            echo '</a>';
             echo '<a href="./database/logout.php" class="menu-item">';
               echo '<li class="underline-hover-effect">Logout</li>';
             echo '</a>';
@@ -57,7 +57,7 @@
   </body>
   <footer>
     <div class="split-items">
-      <p>Last updated: <span>7 October 2025</span></p>
+      <p>Last updated: <span>20 October 2025</span></p>
       <p>Author: Josh Gillum</p>
     </div>
     <div class="split-items">
