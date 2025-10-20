@@ -40,7 +40,7 @@ echo "<script>console.log('user: " . $_SESSION['username'] . "' );</script>";
           </a>
         </div>
         <ul class="navigation-menu">
-          <a href="./habits.php" class="menu-item">
+          <a href="./habits.php" class="menu-item active">
             <li class="underline-hover-effect">Habits</li>
           </a>
           <a href="./database/logout.php" class="menu-item">
@@ -49,6 +49,11 @@ echo "<script>console.log('user: " . $_SESSION['username'] . "' );</script>";
         </ul>
       </div>
       <hr id="head-rule">
+    </div>
+    <div class="breadcrumbs">
+      <a href="./index.php">home</a>
+      <p>></p>
+      <p>habits</p>
     </div>
     <div class="content">
       <div class="tab">
