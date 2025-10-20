@@ -1,3 +1,13 @@
+<?php
+session_start();
+// Check if user is logged in, if not redirect to login page
+if (!isset($_SESSION['username'])) {
+  header("Location: login.php");
+  exit();
+}
+echo "<script>console.log('user: " . $_SESSION['username'] . "' );</script>";
+?>
+
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -22,37 +32,20 @@
       <div class="navigation-head">
         <div class="site-logo">
           <a href="./index.html">
-            <h1>Habits</h1>
+            <?php
+              echo "<h1>";
+              echo "Habits ~ ".ucfirst(strtolower($_SESSION['username']));
+              echo "</h1>";
+            ?>
           </a>
         </div>
         <ul class="navigation-menu">
-          <a href="./habits.html" class="menu-item">
+          <a href="./habits.php" class="menu-item">
             <li class="underline-hover-effect">Habits</li>
           </a>
-          <div class="menu-item dropdown login">
-            <li class="underline-hover-effect">Log In</li>
-            <div class="dropdown-content">
-              <form>
-                <label for="username">Username:</label><br>
-                <input type="text" id="username" name="username"></br>
-                <label for="passowrd">Password:</label><br>
-                <input type="password" id="password" name="password"></br>
-                <input type="submit" value="Login">
-              </form>
-            </div>
-          </div>
-          <div class="menu-item dropdown registration">
-            <li class="underline-hover-effect">Register</li>
-            <div class="dropdown-content">
-              <form>
-                <label for="username">Username:</label><br>
-                <input type="text" id="username" name="username"></br>
-                <label for="password">Password:</label><br>
-                <input type="password" id="password" name="password"></br>
-                <input type="submit" value="Login">
-              </form>
-            </div>
-          </div>
+          <a href="./database/logout.php" class="menu-item">
+            <li class="underline-hover-effect">Logout</li>
+          </a>
         </ul>
       </div>
       <hr id="head-rule">
@@ -173,7 +166,7 @@
   </body>
   <footer>
     <div class="split-items">
-      <p>Last updated: <span>7 October 2025</span></p>
+      <p>Last updated: <span>20 October 2025</span></p>
       <p>Author: Josh Gillum</p>
     </div>
     <div class="split-items">
