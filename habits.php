@@ -16,6 +16,7 @@ if (!isset($_SESSION['username'])) {
 
 include './database/data_connection.php';
 
+
 $daily = [];
 $weekly = [];
 $monthly = [];
@@ -44,6 +45,8 @@ foreach($data as $row){
 
 $stmt->close();
 $conn->close();
+
+include './database/update_habits.php';
 ?>
 
 <!DOCTYPE html>
@@ -103,131 +106,39 @@ $conn->close();
           <button class="tablinks" onclick="openTab(event, 'One-time')">One Time</button>
         </div>
         <!-- Tab content -->
-        <div id="Daily" class="tabcontent">
-          <h3>Daily</h3>
-          <div class="habit-content" id="daily-content">
-            <?php
-              if ($daily){
-                foreach($daily as $row){
-                echo '<div class="flex">';
-                  echo '<label class="habit">';
-                    echo '<input type="checkbox" class="toggle-habit" id="daily-'.$row['id'].'" name="daily-'.$row['id'].'">';
-                    echo $row['text'];
-                  echo '</label>';
-                  echo '<div class="habit-modification-buttons flex">';
-                    echo '<button>Modify</button>';
-                    echo '<button onclick="removeHabit(\'daily-'.$row['id'].'\')">Delete</button>';
-                  echo '</div>';
-                echo '</div>';
-                }
-              }
-            ?>
-          </div>
-          <div class="modification-buttons">
-            <button class="add-new-habit" onclick="addHabit('daily-content')">Add New Habit</button>
-            <button class="submit-habits">Submit Changes</button>
-          </div>
-        </div>
-        <div id="Weekly" class="tabcontent">
-          <h3>Weekly</h3>
-          <div class="habit-content" id="weekly-content">
-            <?php
-              if ($weekly){
-                foreach($weekly as $row){
-                echo '<div class="flex">';
-                  echo '<label class="habit">';
-                    echo '<input type="checkbox" class="toggle-habit" id="weekly-'.$row['id'].'" name="weekly-'.$row['id'].'">';
-                    echo $row['text'];
-                  echo '</label>';
-                  echo '<div class="habit-modification-buttons flex">';
-                    echo '<button>Modify</button>';
-                    echo '<button onclick="removeHabit(\'weekly-'.$row['id'].'\')">Delete</button>';
-                  echo '</div>';
-                echo '</div>';
-                }
-              }
-            ?>
-          </div>
-          <div class="modification-buttons">
-            <button class="add-new-habit" onclick="addHabit('weekly-content')">Add New Habit</button>
-            <button class="submit-habits">Submit Changes</button>
-          </div>
-        </div>
-        <div id="Monthly" class="tabcontent">
-          <h3>Monthly</h3>
-          <div class="habit-content" id="monthly-content">
-            <?php
-              if ($monthly){
-                foreach($monthly as $row){
-                echo '<div class="flex">';
-                  echo '<label class="habit">';
-                    echo '<input type="checkbox" class="toggle-habit" id="monthly-'.$row['id'].'" name="monthly-'.$row['id'].'">';
-                    echo $row['text'];
-                  echo '</label>';
-                  echo '<div class="habit-modification-buttons flex">';
-                    echo '<button>Modify</button>';
-                    echo '<button onclick="removeHabit(\'monthly-'.$row['id'].'\')">Delete</button>';
-                  echo '</div>';
-                echo '</div>';
-                }
-              }
-            ?>
-          </div>
-          <div class="modification-buttons">
-            <button class="add-new-habit" onclick="addHabit('monthly-content')">Add New Habit</button>
-            <button class="submit-habits">Submit Changes</button>
-          </div>
-        </div>
-        <div id="Yearly" class="tabcontent">
-          <h3>Yearly</h3>
-          <div class="habit-content" id="yearly-content">
-            <?php
-              if ($yearly){
-                foreach($yearly as $row){
-                echo '<div class="flex">';
-                  echo '<label class="habit">';
-                    echo '<input type="checkbox" class="toggle-habit" id="yearly-'.$row['id'].'" name="yearly-'.$row['id'].'">';
-                    echo $row['text'];
-                  echo '</label>';
-                  echo '<div class="habit-modification-buttons flex">';
-                    echo '<button>Modify</button>';
-                    echo '<button onclick="removeHabit(\'yearly-'.$row['id'].'\')">Delete</button>';
-                  echo '</div>';
-                echo '</div>';
-                }
-              }
-            ?>
-          </div>
-          <div class="modification-buttons">
-            <button class="add-new-habit" onclick="addHabit('yearly-content')">Add New Habit</button>
-            <button class="submit-habits">Submit Changes</button>
-          </div>
-        </div>
-        <div id="One-time" class="tabcontent">
-          <h3>One Time</h3>
-          <div class="habit-content" id="onetime-content">
-            <?php
-              if ($onetime){
-                foreach($onetime as $row){
-                echo '<div class="flex">';
-                  echo '<label class="habit">';
-                    echo '<input type="checkbox" class="toggle-habit" id="onetime-'.$row['id'].'" name="onetime-'.$row['id'].'">';
-                    echo $row['text'];
-                  echo '</label>';
-                  echo '<div class="habit-modification-buttons flex">';
-                    echo '<button>Modify</button>';
-                    echo '<button onclick="removeHabit(\'onetime-'.$row['id'].'\')">Delete</button>';
-                  echo '</div>';
-                echo '</div>';
-                }
-              }
-            ?>
-          </div>
-          <div class="modification-buttons">
-            <button class="add-new-habit" onclick="addHabit('onetime-content')">Add New Habit</button>
-            <button class="submit-habits">Submit Changes</button>
-          </div>
-        </div>
+        <?php
+        $names = array(
+          array("Daily","Daily","daily",$daily),
+          array("Weekly","Weekly","weekly",$weekly),
+          array("Monthly","Monthly","monthly",$monthly),
+          array("Yearly","Yearly","yearly",$yearly),
+          array("One-time","One Time","onetime",$onetime)
+        ); 
+
+
+        foreach($names as $item){
+          echo '<div id="'.$item[0].'" class="tabcontent">';
+          echo '<h3>'.$item[1].'</h3>';
+          echo '<div class="habit-content" id="'.$item[2].'-content">';
+          if ($item[3]){
+            foreach($item[3] as $row){
+              echo '<div class="flex">';
+              echo '<label class="habit">';
+              echo '<input type="checkbox" class="toggle-habit" id="'.$item[2].'-'.$row['id'].'" name="'.$item[2].'-'.$row['id'].'">';
+              echo $row['text'];
+              echo '</label>';
+              echo '<div class="habit-modification-buttons flex">';
+              echo '<a href="database/modify_habit.php?type='.$item[2].'&id='.$row['id'].'">Modify</a>';
+              echo '</div>';
+              echo '</div>';
+            }
+          }
+          echo '<a href="./database/add_habit.php?selected='.$item[2].'">Add Habit</a>';
+          echo '</div>';
+          echo '</div>';
+        }
+
+        ?>
         <script>
           // Get the element with id="defaultOpen" and click on it
           document.getElementById("defaultOpen").click();
