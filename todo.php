@@ -154,6 +154,7 @@ $conn->close();
           document.getElementById("defaultOpen").click();
         </script>
       </div>
+    <div><p id="demo"></p></div>
     </div>
     <script src="" async defer></script>
     <hr id="foot-rule">

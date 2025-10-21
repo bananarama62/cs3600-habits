@@ -1,3 +1,43 @@
+var timer_interval;
+
+function timer(interval) {
+  const current_time = new Date();
+  var reset_time = new Date();
+  if (interval == "Daily"){
+    reset_time.setDate(current_time.getDate() + 1);
+  } else if(interval == "Weekly"){
+    console.log(current_time.getDay());
+    reset_time.setDate(current_time.getDate() + (7-current_time.getDay()));
+  } else if(interval == "Monthly"){
+    reset_time.setMonth(current_time.getMonth()+1);
+    reset_time.setDate(0);
+  } else if(interval == "Yearly"){
+    reset_time.setFullYear(current_time.getFullYear()+1);
+    reset_time.setMonth(0);
+    reset_time.setDate(0);
+  } else if(interval == "One-time"){
+    document.getElementById("demo").innerHTML = "N/A";
+    return;
+  }
+  else {
+    document.getElementById("demo").innerHTML = "Error!";
+    return;
+  }
+  reset_time.setHours(0);
+  reset_time.setMinutes(0);
+  reset_time.setSeconds(0);
+
+  var time_difference = Math.floor((reset_time.getTime() - current_time.getTime())/1000); //Convert ms to seconds
+  const days = Math.floor(time_difference / 86400);
+  time_difference -= days*86400;
+  const hours = Math.floor(time_difference / 3600);
+  time_difference -= hours*3600;
+  const minutes = Math.floor(time_difference / 60);
+  time_difference -= minutes*60;
+  document.getElementById("demo").innerHTML = `${days}:${hours}:${minutes}:${time_difference}`;
+}
+
+
 function openTab(evt, tabName) {
   // Declare all variables
   var i, tabcontent, tablinks;
@@ -17,5 +57,9 @@ function openTab(evt, tabName) {
   // Show the current tab, and add an "active" class to the button that opened the tab
   document.getElementById(tabName).style.display = "block";
   evt.currentTarget.className += " active";
+  if (timer_interval){
+    clearInterval(timer_interval);
+  }
+  timer_interval = setInterval(timer, 1000, tabName);
 } 
 
