@@ -1,6 +1,6 @@
-To create table userdata for database habits:  
+To create table userdata for database tasks:  
 go to localhost/phpmyadmin
-On left, click new, then database habits.
+On left, click new, then database tasks.
 Click SQL, paste:
 ```
 CREATE TABLE  userdata  (

@@ -55,7 +55,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
       <div class="navigation-head">
         <div class="site-logo">
           <a href="../index.php">
-            <h1>Habits</h1>
+            <h1>Tasks</h1>
           </a>
         </div>
         <ul class="navigation-menu">
@@ -70,8 +70,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
               echo '<li class="underline-hover-effect">Register</li>';
             echo '</a>';
           } else {
-            echo '<a href="../habits.php" class="menu-item">';
-              echo '<li class="underline-hover-effect">Habits</li>';
+            echo '<a href="../todo.php" class="menu-item">';
+              echo '<li class="underline-hover-effect">Tasks</li>';
             echo '</a>';
             echo '<a href="./logout.php" class="menu-item">';
               echo '<li class="underline-hover-effect">Logout</li>';
@@ -117,8 +117,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "</p>";
         echo "<p>";
           echo "Go to ";
-          echo "<a href='../habits.php'>";
-            echo "habits dashboard";
+          echo "<a href='../todo.php'>";
+            echo "Task dashboard";
           echo "</a>";
         echo "</p>";
       }

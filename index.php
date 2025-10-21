@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Habit Tracker</title>
+    <title>Task Tracker</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="./CSS/style.css">
@@ -21,7 +21,7 @@
       <div class="navigation-head">
         <div class="site-logo">
           <a href="./index.php">
-            <h1>Habits</h1>
+            <h1>Tasks</h1>
           </a>
         </div>
         <ul class="navigation-menu">
@@ -36,8 +36,8 @@
               echo '<li class="underline-hover-effect">Register</li>';
             echo '</a>';
           } else {
-            echo '<a href="./habits.php" class="menu-item">';
-              echo '<li class="underline-hover-effect">Habits</li>';
+            echo '<a href="./todo.php" class="menu-item">';
+              echo '<li class="underline-hover-effect">Tasks</li>';
             echo '</a>';
             echo '<a href="./database/logout.php" class="menu-item">';
               echo '<li class="underline-hover-effect">Logout</li>';
@@ -48,7 +48,7 @@
       </div>
       <hr id="head-rule">
       <div class="content">
-        <h1>Habit tracker</h1>
+        <h1>Task tracker</h1>
         <p>This tool will serve as a reminder to complete certain tasks at set intervals. You will tell it which tasks you would like to complete and how often, and it will help you do it.</p>
       </div>
     </div>

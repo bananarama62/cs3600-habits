@@ -36,7 +36,7 @@ if(isset($id) && isset($type)){
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
-  if(isset($_POST['modify_habit'])){
+  if(isset($_POST['modify_task'])){
     if(isset($id) && isset($type) && !$invalid){
       $text = $_POST['text-content']; 
       $stmt = $conn->prepare("UPDATE userdata SET text = ? WHERE username=? and id=? and type=?");
@@ -44,7 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 
       $message = "";
       if($stmt->execute()){
-        $message = "Modified habit successfully";
+        $message = "Modified task successfully";
       } else {
         $message = "Error: ".$stmt->error;
       }
@@ -65,7 +65,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Modify Habit</title>
+    <title>Modify Task</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../CSS/style.css">
@@ -79,7 +79,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
       <div class="navigation-head">
         <div class="site-logo">
           <a href="../index.php">
-            <h1>Habits</h1>
+            <h1>Tasks</h1>
           </a>
         </div>
         <ul class="navigation-menu">
@@ -93,8 +93,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
               echo '<li class="underline-hover-effect">Register</li>';
             echo '</a>';
           } else {
-            echo '<a href="../habits.php" class="menu-item">';
-              echo '<li class="underline-hover-effect">Habits</li>';
+            echo '<a href="../todo.php" class="menu-item">';
+              echo '<li class="underline-hover-effect">Tasks</li>';
             echo '</a>';
             echo '<a href="./logout.php" class="menu-item">';
               echo '<li class="underline-hover-effect">Logout</li>';
@@ -108,26 +108,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     <div class="breadcrumbs">
       <a href="../index.php">home</a>
       <p>></p>
-      <p>modify_habit</p>
+      <p>modify_task</p>
     </div>
     <div class="content">
     <?php
     if(!isset($id) || !isset($type)){
       write_to_console("Id or type not set");
-      echo '<p>Invalid referral link. Click <a href="../habits.php">here</a> to return to the habits dashboard</p>';
+      echo '<p>Invalid referral link. Click <a href="../todo.php">here</a> to return to the task dashboard</p>';
     } else if($invalid){
-      write_to_console("Habit not found for type: ".$type." with id: ".$id);
-      echo '<p>Invalid referral link. Click <a href="../habits.php">here</a> to return to the habits dashboard</p>';
+      write_to_console("Task not found for type: ".$type." with id: ".$id);
+      echo '<p>Invalid referral link. Click <a href="../todo.php">here</a> to return to the task dashboard</p>';
     } else {
-      echo '<h1>Modify habit</h1>';
+      echo '<h1>Modify Task</h1>';
       echo '<p>Original: <span>'.$text.'</span></p>';
         echo '<form method="post">';
           echo '<div>';
             echo '<label for="text-content">New: </label>';
-            echo '<input type="text" name="text-content" id="text-content" required placeholder="This habit is to..." maxlength="255"/>';
+            echo '<input type="text" name="text-content" id="text-content" required placeholder="This task is to..." maxlength="255"/>';
           echo '</div>';
           echo '<div>';
-            echo '<button type="submit" name="modify_habit">Modify</button>';
+            echo '<button type="submit" name="modify_task">Modify</button>';
           echo '</div>';
         echo '</form>';
     echo '</div>';

@@ -46,7 +46,6 @@ foreach($data as $row){
 $stmt->close();
 $conn->close();
 
-include './database/update_habits.php';
 ?>
 
 <!DOCTYPE html>
@@ -58,7 +57,7 @@ include './database/update_habits.php';
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Habit Tracker</title>
+    <title>Task Tracker</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="./CSS/style.css">
@@ -75,14 +74,14 @@ include './database/update_habits.php';
           <a href="./index.php">
             <?php
               echo "<h1>";
-              echo "Habits ~ ".ucfirst(strtolower($_SESSION['username']));
+              echo "Tasks ~ ".ucfirst(strtolower($_SESSION['username']));
               echo "</h1>";
             ?>
           </a>
         </div>
         <ul class="navigation-menu">
-          <a href="./habits.php" class="menu-item active">
-            <li class="underline-hover-effect">Habits</li>
+          <a href="./todo.php" class="menu-item active">
+            <li class="underline-hover-effect">Tasks</li>
           </a>
           <a href="./database/logout.php" class="menu-item">
             <li class="underline-hover-effect">Logout</li>
@@ -94,7 +93,7 @@ include './database/update_habits.php';
     <div class="breadcrumbs">
       <a href="./index.php">home</a>
       <p>></p>
-      <p>habits</p>
+      <p>tasks</p>
     </div>
     <div class="content">
       <div class="tab">
@@ -119,21 +118,21 @@ include './database/update_habits.php';
         foreach($names as $item){
           echo '<div id="'.$item[0].'" class="tabcontent">';
           echo '<h3>'.$item[1].'</h3>';
-          echo '<div class="habit-content" id="'.$item[2].'-content">';
+          echo '<div class="task-content" id="'.$item[2].'-content">';
           if ($item[3]){
             foreach($item[3] as $row){
               echo '<div class="flex">';
-              echo '<label class="habit">';
-              echo '<input type="checkbox" class="toggle-habit" id="'.$item[2].'-'.$row['id'].'" name="'.$item[2].'-'.$row['id'].'">';
+              echo '<label class="task">';
+              echo '<input type="checkbox" class="toggle-task" id="'.$item[2].'-'.$row['id'].'" name="'.$item[2].'-'.$row['id'].'">';
               echo $row['text'];
               echo '</label>';
-              echo '<div class="habit-modification-buttons flex">';
-              echo '<a href="database/modify_habit.php?type='.$item[2].'&id='.$row['id'].'">Modify</a>';
+              echo '<div class="task-modification-buttons flex">';
+              echo '<a href="database/modify_task.php?type='.$item[2].'&id='.$row['id'].'">Modify</a>';
               echo '</div>';
               echo '</div>';
             }
           }
-          echo '<a href="./database/add_habit.php?selected='.$item[2].'">Add Habit</a>';
+          echo '<a href="./database/add_task.php?selected='.$item[2].'">Add Task</a>';
           echo '</div>';
           echo '</div>';
         }

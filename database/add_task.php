@@ -19,7 +19,7 @@ $selected = $_GET['selected'];
 include 'data_connection.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
-  if(isset($_POST['add_habit'])){
+  if(isset($_POST['add_task'])){
     $type = $_POST['frequency'];
     $text = $_POST['text-content']; 
     $stmt = $conn->prepare("SELECT id FROM userdata where username = ? and type = ?");
@@ -51,7 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     $stmt = $conn->prepare("INSERT INTO userdata (username,id,type,text) VALUES (?, ?, ?, ?)");
     $stmt->bind_param("siss",$_SESSION['username'],$next,$type,$text);
     if($stmt->execute()){
-      $message = "Added habit successfully";
+      $message = "Added task successfully";
     } else {
       $message = "Error: ".$stmt->error;
     }
@@ -71,7 +71,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Add Habit</title>
+    <title>Add Task</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../CSS/style.css">
@@ -85,7 +85,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
       <div class="navigation-head">
         <div class="site-logo">
           <a href="../index.php">
-            <h1>Habits</h1>
+            <h1>Tasks</h1>
           </a>
         </div>
         <ul class="navigation-menu">
@@ -99,8 +99,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
               echo '<li class="underline-hover-effect">Register</li>';
             echo '</a>';
           } else {
-            echo '<a href="../habits.php" class="menu-item">';
-              echo '<li class="underline-hover-effect">Habits</li>';
+            echo '<a href="../todo.php" class="menu-item">';
+              echo '<li class="underline-hover-effect">Tasks</li>';
             echo '</a>';
             echo '<a href="./logout.php" class="menu-item">';
               echo '<li class="underline-hover-effect">Logout</li>';
@@ -114,10 +114,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     <div class="breadcrumbs">
       <a href="../index.php">home</a>
       <p>></p>
-      <p>add_habit</p>
+      <p>add_task</p>
     </div>
     <div class="content">
-      <h1>Add habit</h1>
+      <h1>Add task</h1>
         <form method="post">
           <div>
             <label for="frequency">Frequency: </label>
@@ -142,10 +142,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
           </div>
           <div>
             <label for="text-content">Text: </label>
-            <input type="text" name="text-content" id="text-content" required placeholder="This habit is to..." maxlength="255"/>
+            <input type="text" name="text-content" id="text-content" required placeholder="This task is to..." maxlength="255"/>
           </div>
           <div>
-            <button type="submit" name="add_habit">Submit</button>
+            <button type="submit" name="add_task">Submit</button>
           </div>
         </form>
     </div>
