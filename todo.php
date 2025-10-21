@@ -24,7 +24,7 @@ $weekly = [];
 $monthly = [];
 $yearly = [];
 $onetime = [];
-$stmt = $conn->prepare("SELECT type,id,text FROM userdata WHERE username = ?");
+$stmt = $conn->prepare("SELECT type,id,text,last_completed FROM userdata WHERE username = ?");
 $stmt->bind_param("s", $_SESSION['username']);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -46,6 +46,40 @@ foreach($data as $row){
 }
 
 $stmt->close();
+
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit_changes'])){
+  date_default_timezone_set("UTC");
+  $current_time = date("Y-m-d H:i:s");
+  $stmt = $conn->prepare("UPDATE userdata SET last_completed=? where username=? and id=? and type=?");
+  $fetchstmt = $conn->prepare("SELECT last_completed FROM userdata WHERE username=? AND id=? AND type=?");
+
+  foreach($_POST as $name => $value){
+    if($name != "submit_changes"){
+      $split = explode("-",$name);
+      $type = $split[0];
+      $id = $split[1];
+      $fetchstmt->bind_param("sis",$_SESSION['username'],$id,$type);
+      if($fetchstmt->execute()){
+        $result = $fetchstmt->get_result();
+        $data = $result->fetch_assoc();
+        $last_completed = $data['last_completed'];
+        if($last_completed < $current_time){
+          $stmt->bind_param("ssis",$current_time,$_SESSION['username'],$id,$type);
+          $message = "";
+          if($stmt->execute()){
+            $message = "modified task successfully";
+          } else {
+            $message = "error: ".$stmt->error;
+          }
+          write_to_console($message);
+        }
+      } else {
+        write_to_console("Failed to fetch...");
+      }
+    }
+  }
+  $stmt->close();
+}
 $conn->close();
 
 ?>
@@ -102,11 +136,11 @@ $conn->close();
         <div class="tab-buttons">
           <?php
           $names = array(
-            array("Daily","Daily","daily",$daily),
-            array("Weekly","Weekly","weekly",$weekly),
-            array("Monthly","Monthly","monthly",$monthly),
-            array("Yearly","Yearly","yearly",$yearly),
-            array("One-time","One Time","onetime",$onetime)
+            array("Daily","Daily","daily",$daily,$today),
+            array("Weekly","Weekly","weekly",$weekly,$this_week),
+            array("Monthly","Monthly","monthly",$monthly,$this_month),
+            array("Yearly","Yearly","yearly",$yearly,$this_year),
+            array("One-time","One Time","onetime",$onetime,0)
           ); 
               if(!isset($tab)){
                 $tab="daily";
@@ -125,28 +159,59 @@ $conn->close();
         echo '<!-- Tab content -->';
         
 
+        date_default_timezone_set("UTC");
+        $current_time = date("Y-m-d H:i:s");
+        $today = date("Y-m-d H:i:s",strtotime('today,midnight'));
+        if (date("w") == 0){
+          $this_week = $today;
+        } else {
+          $this_week = date("Y-m-d H:i:s",strtotime('last Sunday'));
+        }
+        $this_month = date("Y-m-d H:i:s",strtotime('first day of this month, midnight'));
+        $this_year = date("Y-m-d H:i:s",strtotime('first day of january this year'));
 
         foreach($names as $item){
           echo '<div id="'.$item[0].'" class="tabcontent">';
+          echo '<div class="tab-title split-items">';
           echo '<h3>'.$item[1].'</h3>';
+          echo '<p class="reset-timer-holder"></p>';
+          echo '</div>';
           echo '<div class="task-content" id="'.$item[2].'-content">';
           echo '<form method="POST">';
+          $completed_tasks = [];
           if ($item[3]){
             foreach($item[3] as $row){
-              echo '<div class="flex">';
-              echo '<label class="task">';
-              echo '<input type="checkbox" class="toggle-task" id="'.$item[2].'-'.$row['id'].'" name="'.$item[2].'-'.$row['id'].'">';
-              echo $row['text'];
-              echo '</label>';
-              echo '<div class="task-modification-buttons flex">';
-              echo '<a href="database/modify_task.php?type='.$item[2].'&id='.$row['id'].'">Modify</a>';
-              echo '</div>';
-              echo '</div>';
+              if($row['last_completed'] > $item[4]){
+                $completed_tasks[] = $row;
+              } else {
+                echo '<div class="flex">';
+                echo '<label class="task">';
+                echo '<input type="checkbox" class="toggle-task" id="'.$item[2].'-'.$row['id'].'" name="'.$item[2].'-'.$row['id'].'">';
+                  echo $row['text'];
+                echo '</label>';
+                echo '<div class="task-modification-buttons flex">';
+                echo '<a href="database/modify_task.php?type='.$item[2].'&id='.$row['id'].'">Modify</a>';
+                echo '</div>';
+                echo '</div>';
+              }
             }
           }
-          echo '<a href="./database/add_task.php?selected='.$item[2].'">Add Task</a>';
-          echo '<button type="submit" name="submit_changes">Submit</button>';
+          if(sizeof($completed_tasks) >= sizeof($item[3]) && sizeof($item[3]) > 0){
+            echo '<p>Nothing to see here!</p>';
+            echo '<a href="./database/add_task.php?selected='.$item[2].'">Add Task</a>';
+          } else {
+            echo '<a href="./database/add_task.php?selected='.$item[2].'">Add Task</a>';
+            if(sizeof($item[3]) > 0){
+              echo '<button type="submit" name="submit_changes">Submit</button>';
+            }
+          }
           echo '</form>';
+          if(sizeof($completed_tasks) > 0){
+            echo '<h3>Completed</h3>';
+            foreach($completed_tasks as $item){
+              echo '<p><del>'.$item['text'].'</del></p>';
+            }
+          }
           echo '</div>';
           echo '</div>';
         }

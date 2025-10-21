@@ -3,6 +3,7 @@ var timer_interval;
 function timer(interval) {
   const current_time = new Date();
   var reset_time = new Date();
+  const offset = current_time.getTimezoneOffset();
   if (interval == "Daily"){
     reset_time.setDate(current_time.getDate() + 1);
   } else if(interval == "Weekly"){
@@ -16,15 +17,15 @@ function timer(interval) {
     reset_time.setMonth(0);
     reset_time.setDate(0);
   } else if(interval == "One-time"){
-    document.getElementById("demo").innerHTML = "N/A";
+    document.getElementById("reset-timer").innerHTML = "N/A";
     return;
   }
   else {
-    document.getElementById("demo").innerHTML = "Error!";
+    document.getElementById("reset-timer").innerHTML = "Error!";
     return;
   }
   reset_time.setHours(0);
-  reset_time.setMinutes(0);
+  reset_time.setMinutes(0 - offset);
   reset_time.setSeconds(0);
 
   var time_difference = Math.floor((reset_time.getTime() - current_time.getTime())/1000); //Convert ms to seconds
@@ -34,7 +35,7 @@ function timer(interval) {
   time_difference -= hours*3600;
   const minutes = Math.floor(time_difference / 60);
   time_difference -= minutes*60;
-  document.getElementById("demo").innerHTML = `${days}:${hours}:${minutes}:${time_difference}`;
+  document.getElementById("reset-timer").innerHTML = `Reset ~ ${days}:${hours}:${minutes}:${time_difference}`;
 }
 
 
@@ -55,7 +56,16 @@ function openTab(evt, tabName) {
   }
 
   // Show the current tab, and add an "active" class to the button that opened the tab
-  document.getElementById(tabName).style.display = "block";
+  tab = document.getElementById(tabName);
+  tab.style.display = "block";
+  // Removes old reset-timer id and sets new one
+  var old = document.getElementById("reset-timer");
+  if(old){
+    old.id = "";
+  }
+  var holder = tab.querySelector(".reset-timer-holder");
+  console.log(holder);
+  holder.id = "reset-timer";
   evt.currentTarget.className += " active";
   if (timer_interval){
     clearInterval(timer_interval);
