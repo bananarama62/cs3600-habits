@@ -130,6 +130,7 @@ $conn->close();
           echo '<div id="'.$item[0].'" class="tabcontent">';
           echo '<h3>'.$item[1].'</h3>';
           echo '<div class="task-content" id="'.$item[2].'-content">';
+          echo '<form method="POST">';
           if ($item[3]){
             foreach($item[3] as $row){
               echo '<div class="flex">';
@@ -144,6 +145,8 @@ $conn->close();
             }
           }
           echo '<a href="./database/add_task.php?selected='.$item[2].'">Add Task</a>';
+          echo '<button type="submit" name="submit_changes">Submit</button>';
+          echo '</form>';
           echo '</div>';
           echo '</div>';
         }
