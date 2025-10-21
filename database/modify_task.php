@@ -36,21 +36,38 @@ if(isset($id) && isset($type)){
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
-  if(isset($_POST['modify_task'])){
-    if(isset($id) && isset($type) && !$invalid){
+  $perform = false;
+  $modify = false;
+  if (isset($_POST['modify_task'])){
+    $perform = true;
+    $modify = true;
+  } else if(isset($_POST['delete_task'])){
+    $perform = true;
+    $modify = false;
+  }
+
+  if(isset($id) && isset($type) && !$invalid && $perform){
+    if($modify){
       $text = $_POST['text-content']; 
       $stmt = $conn->prepare("UPDATE userdata SET text = ? WHERE username=? and id=? and type=?");
       $stmt->bind_param("ssis",$text,$_SESSION['username'],$id,$type);
-
-      $message = "";
-      if($stmt->execute()){
-        $message = "Modified task successfully";
-      } else {
-        $message = "Error: ".$stmt->error;
-      }
-      $stmt->close();
-      write_to_console($message);
+    } else {
+      $stmt = $conn->prepare("DELETE FROM userdata where username=? and id=? and type=?");
+      $stmt->bind_param("sis",$_SESSION['username'],$id,$type);
     }
+
+    $message = "";
+    if($stmt->execute()){
+      $message = "modified task successfully";
+    } else {
+      $message = "error: ".$stmt->error;
+    }
+    $stmt->close();
+    write_to_console($message);
+    // Returns to task dashboard after modification or deletion
+    header("Location: ../todo.php?type=".$type);
+    exit();
+
   }
   $conn->close();
 }
@@ -108,6 +125,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     <div class="breadcrumbs">
       <a href="../index.php">home</a>
       <p>></p>
+      <a href="../todo.php">tasks</a>
+      <p>></p>
       <p>modify_task</p>
     </div>
     <div class="content">
@@ -124,15 +143,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
         echo '<form method="post">';
           echo '<div>';
             echo '<label for="text-content">New: </label>';
-            echo '<input type="text" name="text-content" id="text-content" required placeholder="This task is to..." maxlength="255"/>';
+            echo '<input type="text" name="text-content" id="text-content" placeholder="This task is to..." maxlength="255"/>';
           echo '</div>';
           echo '<div>';
             echo '<button type="submit" name="modify_task">Modify</button>';
+            echo '<button type="submit" name="delete_task">Delete</button>';
           echo '</div>';
         echo '</form>';
-    echo '</div>';
     }
     ?>
+    </div>
     <script src="" async defer></script>
     <hr id="foot-rule">
   </body>

@@ -14,6 +14,8 @@ if (!isset($_SESSION['username'])) {
   exit();
 }
 
+$tab = $_GET["type"];
+
 include './database/data_connection.php';
 
 
@@ -98,21 +100,30 @@ $conn->close();
     <div class="content">
       <div class="tab">
         <div class="tab-buttons">
-          <button class="tablinks" id="defaultOpen" onclick="openTab(event, 'Daily')">Daily</button>
-          <button class="tablinks" onclick="openTab(event, 'Weekly')">Weekly</button>
-          <button class="tablinks" onclick="openTab(event, 'Monthly')">Monthly</button>
-          <button class="tablinks" onclick="openTab(event, 'Yearly')">Yearly</button>
-          <button class="tablinks" onclick="openTab(event, 'One-time')">One Time</button>
-        </div>
-        <!-- Tab content -->
-        <?php
-        $names = array(
-          array("Daily","Daily","daily",$daily),
-          array("Weekly","Weekly","weekly",$weekly),
-          array("Monthly","Monthly","monthly",$monthly),
-          array("Yearly","Yearly","yearly",$yearly),
-          array("One-time","One Time","onetime",$onetime)
-        ); 
+          <?php
+          $names = array(
+            array("Daily","Daily","daily",$daily),
+            array("Weekly","Weekly","weekly",$weekly),
+            array("Monthly","Monthly","monthly",$monthly),
+            array("Yearly","Yearly","yearly",$yearly),
+            array("One-time","One Time","onetime",$onetime)
+          ); 
+              if(!isset($tab)){
+                $tab="daily";
+              }
+
+              foreach($names as $item){
+                $prefix = '<button class="tablinks"';
+                $middle = '';
+                $suffix = ' onclick="openTab(event,\''.$item[0].'\')">'.$item[1].'</button>';
+                if($tab == $item[2]){
+                  $middle = ' id="defaultOpen"';
+                }
+                echo $prefix.$middle.$suffix;
+          }
+        echo '</div>';
+        echo '<!-- Tab content -->';
+        
 
 
         foreach($names as $item){

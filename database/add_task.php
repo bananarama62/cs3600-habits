@@ -57,6 +57,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     }
     $stmt->close();
     write_to_console($message);
+    header("Location: ../todo.php?type=".$type);
+    exit();
   }
   $conn->close();
 }
@@ -113,6 +115,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     </div>
     <div class="breadcrumbs">
       <a href="../index.php">home</a>
+      <p>></p>
+      <a href="../todo.php">tasks</a>
       <p>></p>
       <p>add_task</p>
     </div>
