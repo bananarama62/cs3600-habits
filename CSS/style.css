@@ -502,3 +502,12 @@ code {
 .success {
   color: var(--status-complete-color);
 }
+
+.text-input-wide {
+  width: 100%;
+  margin-top: 0.2em;
+}
+
+.text-input-small {
+  width: 15em;
+}

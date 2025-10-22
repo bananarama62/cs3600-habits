@@ -143,7 +143,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
         echo '<form method="post">';
           echo '<div>';
             echo '<label for="text-content">New: </label>';
-            echo '<input type="text" name="text-content" id="text-content" placeholder="This task is to..." maxlength="255"/>';
+            echo '<input type="text" name="text-content" id="text-content" required class="text-input-wide" placeholder="This task is to..." maxlength="255"/>';
           echo '</div>';
           echo '<div>';
             echo '<button type="submit" name="modify_task" class="submit-button">Modify</button>';

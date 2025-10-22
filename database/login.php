@@ -106,12 +106,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       if (!isset($_SESSION['username'])) {
         echo '<form method="post" class="form-control">';
           echo '<div>';
-            echo '<label for="username">User Name:</label>';
-            echo '<input type="text" name="username" id="username" class="form-control" required>';
+            echo '<label for="username">User Name: </label>';
+            echo '<input type="text" name="username" id="username" class="text-input-small" required>';
           echo '</div>';
           echo '<div>';
-            echo '<label for="password">Password:</label>';
-            echo '<input type="password" name="password" id="password" class="form-control" required>';
+            echo '<label for="password">Password: </label>';
+            echo '<input type="password" name="password" id="password" class="text-input-small" required>';
           echo '</div>';
           echo '<div>';
             echo '<button type="submit" name="register" class="submit-button">Submit</button>';

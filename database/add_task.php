@@ -146,7 +146,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
             </div>
             <div>
               <label for="text-content">Text: </label>
-              <input type="text" name="text-content" id="text-content" required placeholder="This task is to..." maxlength="255"/>
+              <input type="text" name="text-content" id="text-content" class="text-input-wide" required placeholder="This task is to..." maxlength="255"/>
             </div>
             <div>
               <button type="submit" name="add_task" class="styled-button submit-button">Submit</button>
