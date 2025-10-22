@@ -6,6 +6,7 @@ $message = "";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['username'];
     $password = $_POST['password'];
+    //$password = password_hash($password, PASSWORD_DEFAULT);
 
     // Prepare and execute
     $stmt = $conn->prepare("SELECT password FROM userdata WHERE username = ?");
@@ -17,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bind_result($db_password);
         $stmt->fetch();
 
-        if ($password === $db_password) {
+        if (password_verify($password,$db_password)) {
             $message = "Login successful";
             // Start the session and redirect to the dashboard or home page
             session_start();
@@ -106,7 +107,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           echo '</div>';
           echo '<div>';
             echo '<label for="password">Password:</label>';
-            echo '<input type="text" name="password" id="password" class="form-control" required>';
+            echo '<input type="password" name="password" id="password" class="form-control" required>';
           echo '</div>';
           echo '<div>';
             echo '<button type="submit" name="register">Submit</button>';

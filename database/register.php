@@ -6,6 +6,7 @@ $message = "";
 if($_SERVER["REQUEST_METHOD"] == "POST") {
   $username = $_POST['username'];
   $password = $_POST['password'];
+  $password = password_hash($password, PASSWORD_DEFAULT);
 
   // Check if username already exists
   $checkEmailStmt = $conn->prepare("SELECT username FROM userdata where username = ?");
@@ -101,7 +102,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
           echo '</div>';
           echo '<div>';
             echo '<label for="password">Password:</label>';
-            echo '<input type="text" name="password" id="password" class="form-control" required>';
+            echo '<input type="password" name="password" id="password" class="form-control" required>';
           echo '</div>';
           echo '<div>';
             echo '<button type="submit" name="register">Submit</button>';
