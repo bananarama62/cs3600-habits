@@ -98,7 +98,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_account'])) {
     <div class="breadcrumbs">
       <a href="../index.php">home</a>
       <p>></p>
-      <p>login</p>
+      <p>delete-account</p>
     </div>
     <div class="content">
       <?php
