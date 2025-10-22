@@ -46,6 +46,9 @@ foreach($data as $row){
 }
 
 $stmt->close();
+$conn->close();
+
+include './database/data_connection.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit_changes'])){
   date_default_timezone_set("UTC");
@@ -76,11 +79,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit_changes'])){
       } else {
         write_to_console("Failed to fetch...");
       }
+      $stmt->close();
+      $conn->close();
+      header("Refresh:0; url=todo.php?type=".$type);
     }
   }
-  $stmt->close();
 }
-$conn->close();
+
 
 ?>
 
@@ -229,7 +234,7 @@ $conn->close();
   </body>
   <footer>
     <div class="split-items">
-      <p>Last updated: <span>20 October 2025</span></p>
+      <p>Last updated: <span>21 October 2025</span></p>
       <p>Author: Josh Gillum</p>
     </div>
     <div class="split-items">

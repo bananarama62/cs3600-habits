@@ -12,12 +12,10 @@ function timer(interval) {
     console.log(current_time.getDay());
     reset_time.setDate(current_time.getDate() + (7-current_time.getDay()));
   } else if(interval == "Monthly"){
-    reset_time.setMonth(current_time.getMonth()+1);
-    reset_time.setDate(0);
+    reset_time.setMonth(current_time.getMonth()+1,1);
   } else if(interval == "Yearly"){
     reset_time.setFullYear(current_time.getFullYear()+1);
-    reset_time.setMonth(0);
-    reset_time.setDate(0);
+    reset_time.setMonth(0,1);
   } else if(interval == "One-time"){
     document.getElementById("reset-timer").innerHTML = "N/A";
     return;
@@ -30,13 +28,15 @@ function timer(interval) {
   reset_time.setMinutes(0);
   reset_time.setSeconds(0);
 
+  const zeroPad = (num, places) => String(num).padStart(places, '0');
   var time_difference = Math.floor((reset_time.getTime() - current_time.getTime())/1000); //Convert ms to seconds
-  const days = Math.floor(time_difference / 86400);
+  const days = zeroPad(Math.floor(time_difference / 86400),3);
   time_difference -= days*86400;
-  const hours = Math.floor(time_difference / 3600);
+  const hours = zeroPad(Math.floor(time_difference / 3600),2);
   time_difference -= hours*3600;
-  const minutes = Math.floor(time_difference / 60);
+  const minutes = zeroPad(Math.floor(time_difference / 60),2);
   time_difference -= minutes*60;
+  time_difference = zeroPad(time_difference,2);
   document.getElementById("reset-timer").innerHTML = `Reset ~ ${days}:${hours}:${minutes}:${time_difference}`;
 }
 
