@@ -105,7 +105,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             echo '<input type="password" name="password" id="password" class="form-control" required>';
           echo '</div>';
           echo '<div>';
-            echo '<button type="submit" name="register">Submit</button>';
+            echo '<button type="submit" name="register" class="submit-button">Submit</button>';
           echo '</div>';
         echo '</form>';
       } else {

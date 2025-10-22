@@ -207,7 +207,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit_changes'])){
           } else {
             echo '<a href="./database/add_task.php?selected='.$item[2].'">Add Task</a>';
             if(sizeof($item[3]) > 0){
-              echo '<button type="submit" name="submit_changes">Submit</button>';
+              echo '<button type="submit" name="submit_changes" class="submit-button">Submit</button>';
             }
           }
           echo '</form>';

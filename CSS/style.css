@@ -427,6 +427,25 @@ code {
   display:flex;
 }
 
+.submit-button {
+  background-color: inherit;
+  color: var(--font-color);
+  background-color: var(--bg-color-alternate);
+  border-color: var(--text-color);
+  border-width: 2px;
+  outline: none;
+  cursor: pointer;
+  padding: 0.5em 1em;
+  transition: 0.3s;
+  margin-top: 1em;
+  margin-left: 1em;
+  border-radius: 10px;
+}
+
+.submit-button:hover {
+  background-color: var(--highlight-color);
+}
+
 /* Style the buttons that are used to open the tab content */
 .tab button {
   background-color: inherit;
@@ -475,3 +494,4 @@ code {
 .task-modification-buttons {
   margin-left: 1em;
 }
+

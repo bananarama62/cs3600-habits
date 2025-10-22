@@ -121,37 +121,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
       <p>add_task</p>
     </div>
     <div class="content">
-      <h1>Add task</h1>
-        <form method="post">
-          <div>
-            <label for="frequency">Frequency: </label>
-            <select name="frequency" id="frequency">
-              <?php
-              $names = array(
-                array("daily","Daily"),
-                array("weekly","Weekly"),
-                array("monthly","Monthly"),
-                array("yearly","Yearly"),
-                array("onetime","One time")
-              );
-                foreach($names as $item){
-                  if(isset($selected) && $selected == $item[0]){
-                    echo '<option value="'.$item[0].'" selected>'.$item[1].'</option>';
-                  } else {
-                    echo '<option value="'.$item[0].'">'.$item[1].'</option>';
-                  }
-              }
-              ?>
-            </select>
-          </div>
-          <div>
-            <label for="text-content">Text: </label>
-            <input type="text" name="text-content" id="text-content" required placeholder="This task is to..." maxlength="255"/>
-          </div>
-          <div>
-            <button type="submit" name="add_task">Submit</button>
-          </div>
-        </form>
+        <h1>Add task</h1>
+          <form method="post">
+            <div>
+              <label for="frequency">Frequency: </label>
+              <select name="frequency" id="frequency">
+                <?php
+                $names = array(
+                  array("daily","Daily"),
+                  array("weekly","Weekly"),
+                  array("monthly","Monthly"),
+                  array("yearly","Yearly"),
+                  array("onetime","One time")
+                );
+                  foreach($names as $item){
+                    if(isset($selected) && $selected == $item[0]){
+                      echo '<option value="'.$item[0].'" selected>'.$item[1].'</option>';
+                    } else {
+                      echo '<option value="'.$item[0].'">'.$item[1].'</option>';
+                    }
+                }
+                ?>
+              </select>
+            </div>
+            <div>
+              <label for="text-content">Text: </label>
+              <input type="text" name="text-content" id="text-content" required placeholder="This task is to..." maxlength="255"/>
+            </div>
+            <div>
+              <button type="submit" name="add_task" class="styled-button submit-button">Submit</button>
+            </div>
+          </form>
     </div>
     <script src="" async defer></script>
     <hr id="foot-rule">

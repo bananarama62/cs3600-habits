@@ -146,8 +146,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
             echo '<input type="text" name="text-content" id="text-content" placeholder="This task is to..." maxlength="255"/>';
           echo '</div>';
           echo '<div>';
-            echo '<button type="submit" name="modify_task">Modify</button>';
-            echo '<button type="submit" name="delete_task">Delete</button>';
+            echo '<button type="submit" name="modify_task" class="submit-button">Modify</button>';
+            echo '<button type="submit" name="delete_task" class="submit-button">Delete</button>';
           echo '</div>';
         echo '</form>';
     }
