@@ -34,7 +34,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $stmt->close();
     $conn->close();
-    echo "<script>console.log('Debug Objects: " . $message . "' );</script>";
 }
 ?>
 
@@ -52,6 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../CSS/style.css">
     <script src="../JS/title.js"></script>
+    <script src="../JS/message.js"></script>
   </head>
   <body>
     <!--[if lt IE 7]>
@@ -95,6 +95,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
     <div class="content">
       <h1>Login</h1>
+      <div id="submission-message-holder"><p></p></div>
       <?php
       session_start();
       // Lets user know that they are already logged in
@@ -127,6 +128,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo "Task dashboard";
           echo "</a>";
         echo "</p>";
+      }
+      if(isset($message) && !empty($message)){
+        echo '<script>submissionMessage("'.$message.'");</script>';
       }
       ?>
     </div>

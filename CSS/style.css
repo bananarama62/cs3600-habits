@@ -495,3 +495,10 @@ code {
   margin-left: 1em;
 }
 
+.error {
+  color: var(--status-on-hold-color);
+}
+
+.success {
+  color: var(--status-complete-color);
+}

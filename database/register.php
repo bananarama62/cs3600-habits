@@ -2,6 +2,7 @@
 include 'login_connection.php';
 
 $message = "";
+$error = 1;
 
 if($_SERVER["REQUEST_METHOD"] == "POST") {
   $username = $_POST['username'];
@@ -15,13 +16,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
   $checkEmailStmt->store_result();
 
   if ($checkEmailStmt->num_rows > 0){
-    $message = "Email ID already exists";
+    $message = "Username is not available";
   } else {
     $stmt = $conn->prepare("INSERT INTO userdata (username, password) VALUES (?, ?)");
     $stmt->bind_param("ss",$username,$password);
 
     if($stmt->execute()){
       $message = "Account created successfully";
+      $error = 0;
     } else {
       $message = "Error: ".$stmt->error;
     }
@@ -29,7 +31,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
   }
   $checkEmailStmt->close();
   $conn->close();
-  echo "<script>console.log('Debug Objects: " . $message . "' );</script>";
 }
 ?>
 
@@ -47,6 +48,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../CSS/style.css">
     <script src="../JS/title.js"></script>
+    <script src="../JS/message.js"></script>
   </head>
   <body>
     <!--[if lt IE 7]>
@@ -90,6 +92,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
     <div class="content">
       <h1>Register</h1>
+      <div id="submission-message-holder"><p></p></div>
       <?php
       session_start();
       // Lets user know they are already logged in
@@ -97,11 +100,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
       if (!isset($_SESSION['username'])) {
         echo '<form method="post" class="form-control">';
           echo '<div>';
-            echo '<label for="username">User Name:</label>';
+            echo '<label for="username">User Name: </label>';
             echo '<input type="text" name="username" id="username" class="form-control" required>';
           echo '</div>';
           echo '<div>';
-            echo '<label for="password">Password:</label>';
+            echo '<label for="password">Password: </label>';
             echo '<input type="password" name="password" id="password" class="form-control" required>';
           echo '</div>';
           echo '<div>';
@@ -122,6 +125,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             echo "Task dashboard";
           echo "</a>";
         echo "</p>";
+      }
+      if(isset($message) && !empty($message)){
+        echo '<script>submissionMessage("'.$message.'",'.$error.');</script>';
       }
       ?>
     </div>
