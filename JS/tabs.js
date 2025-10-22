@@ -1,9 +1,11 @@
 var timer_interval;
 
 function timer(interval) {
-  const current_time = new Date();
+  var current_time = new Date();
   var reset_time = new Date();
   const offset = current_time.getTimezoneOffset();
+  current_time.setMinutes(current_time.getMinutes()+offset);
+  reset_time.setMinutes(reset_time.getMinutes()+offset);
   if (interval == "Daily"){
     reset_time.setDate(current_time.getDate() + 1);
   } else if(interval == "Weekly"){
@@ -25,7 +27,7 @@ function timer(interval) {
     return;
   }
   reset_time.setHours(0);
-  reset_time.setMinutes(0 - offset);
+  reset_time.setMinutes(0);
   reset_time.setSeconds(0);
 
   var time_difference = Math.floor((reset_time.getTime() - current_time.getTime())/1000); //Convert ms to seconds
@@ -62,6 +64,7 @@ function openTab(evt, tabName) {
   var old = document.getElementById("reset-timer");
   if(old){
     old.id = "";
+    old.innerHTML = "";
   }
   var holder = tab.querySelector(".reset-timer-holder");
   console.log(holder);
@@ -70,6 +73,7 @@ function openTab(evt, tabName) {
   if (timer_interval){
     clearInterval(timer_interval);
   }
+  timer(tabName);
   timer_interval = setInterval(timer, 1000, tabName);
 } 
 
