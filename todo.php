@@ -127,6 +127,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit_changes'])){
           <a href="./database/logout.php" class="menu-item">
             <li class="underline-hover-effect">Logout</li>
           </a>
+          <a href="./database/delete_account.php" class="menu-item">
+            <li class="underline-hover-effect error">Delete Account</li>
+          </a>
         </ul>
       </div>
       <hr id="head-rule">

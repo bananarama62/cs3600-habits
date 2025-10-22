@@ -1,39 +1,46 @@
 <?php
-include 'login_connection.php';
+session_start();
+// Check if user is logged in, if not redirect to login page
+if (!isset($_SESSION['username'])) {
+  header("Location: ./login.php");
+  exit();
+}
 
 $message = "";
 $error = 1;
 
-if($_SERVER["REQUEST_METHOD"] == "POST") {
-  $username = $_POST['username'];
-  $password = $_POST['password'];
-  $password = password_hash($password, PASSWORD_DEFAULT);
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_account'])) {
+  include 'login_connection.php';
 
-  // Check if username already exists
-  $checkEmailStmt = $conn->prepare("SELECT username FROM userdata where username = ?");
-  $checkEmailStmt->bind_param("s",$username);
-  $checkEmailStmt->execute();
-  $checkEmailStmt->store_result();
+  // Prepare and execute
+  $stmt = $conn->prepare("DELETE from userdata WHERE username = ?");
+  $stmt->bind_param("s", $_SESSION['username']);
+  // Deletes user data from login database
+  if ($stmt->execute()){
+    $stmt->close();
+    $conn->close();
 
-  if ($checkEmailStmt->num_rows > 0){
-    $message = "Username is not available";
-  } else {
-    $stmt = $conn->prepare("INSERT INTO userdata (username, password) VALUES (?, ?)");
-    $stmt->bind_param("ss",$username,$password);
 
-    if($stmt->execute()){
-      $message = "Account created successfully. You will be redirected soon.";
+    include 'data_connection.php';
+    $stmt = $conn->prepare("DELETE from userdata WHERE username = ?");
+    $stmt->bind_param("s", $_SESSION['username']);
+    // Deletes user data from task database
+    if ($stmt->execute()){
+      $message = "Account deletion successful.";
       $error = 0;
-      header("refresh:5;url=../todo.php");
-      session_start();
-      $_SESSION['username'] = $username;
+      $_SESSION = array();
+      session_destroy();
+      header("refresh:5;url=../index.php");
     } else {
-      $message = "Error: ".$stmt->error;
+      $message = "Failed to delete account.";
     }
     $stmt->close();
+    $conn->close();
+  } else {
+    $message = "Failed to delete account.";
+    $stmt->close();
+    $conn->close();
   }
-  $checkEmailStmt->close();
-  $conn->close();
 }
 ?>
 
@@ -69,10 +76,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
           session_start();
           // Check if user is logged in, if not redirect to login page
           if (!isset($_SESSION['username'])) {
-            echo '<a href="./login.php" class="menu-item">';
+            echo '<a href="./login.php" class="menu-item active">';
               echo '<li class="underline-hover-effect">Login</li>';
             echo '</a>';
-            echo '<a href="./register.php" class="menu-item active">';
+            echo '<a href="./register.php" class="menu-item">';
               echo '<li class="underline-hover-effect">Register</li>';
             echo '</a>';
           } else {
@@ -81,9 +88,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             echo '</a>';
             echo '<a href="./logout.php" class="menu-item">';
               echo '<li class="underline-hover-effect">Logout</li>';
-            echo '</a>';
-            echo '<a href="./delete_account.php" class="menu-item">';
-              echo '<li class="underline-hover-effect error">Delete Account</li>';
             echo '</a>';
           }
           ?>
@@ -94,46 +98,21 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="breadcrumbs">
       <a href="../index.php">home</a>
       <p>></p>
-      <p>register</p>
+      <p>login</p>
     </div>
     <div class="content">
-      <h1>Register</h1>
-      <div id="submission-message-holder"><p></p></div>
       <?php
       session_start();
-      // Lets user know they are already logged in
-
-      if (!isset($_SESSION['username'])) {
-        echo '<form method="post" class="form-control">';
-          echo '<div>';
-            echo '<label for="username">User Name: </label>';
-            echo '<input type="text" name="username" id="username" class="form-control" required>';
-          echo '</div>';
-          echo '<div>';
-            echo '<label for="password">Password: </label>';
-            echo '<input type="password" name="password" id="password" class="form-control" required>';
-          echo '</div>';
-          echo '<div>';
-            echo '<button type="submit" name="register" class="submit-button">Submit</button>';
-          echo '</div>';
-        echo '</form>';
-      } else {
-        echo "<p>";
-          echo "You are already logged in. Would you like to ";
-          echo "<a href='./logout.php'>";
-            echo "logout";
-          echo "</a>";
-          echo "?";
-        echo "</p>";
-        echo "<p>";
-          echo "Go to ";
-          echo "<a href='../todo.php'>";
-            echo "Task dashboard";
-          echo "</a>";
-        echo "</p>";
-      }
+      echo '<h1>Login</h1>';
+      echo '<div id="submission-message-holder"><p></p></div>';
+      echo '<h2>You are currently logged in as '.$_SESSION["username"];
+      echo '<form method="post" class="form-control">';
+        echo '<div>';
+          echo '<button type="submit" name="delete_account" class="submit-button">Delete Account</button>';
+        echo '</div>';
+      echo '</form>';
       if(isset($message) && !empty($message)){
-        echo '<script>submissionMessage("'.$message.'",'.$error.');</script>';
+        echo '<script>submissionMessage("'.$message.'");</script>';
       }
       ?>
     </div>

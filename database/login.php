@@ -67,7 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <ul class="navigation-menu">
           <?php
           session_start();
-          // Check if user is logged in, if not redirect to login page
+          // Check if user is logged in
           if (!isset($_SESSION['username'])) {
             echo '<a href="./login.php" class="menu-item active">';
               echo '<li class="underline-hover-effect">Login</li>';
@@ -81,6 +81,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo '</a>';
             echo '<a href="./logout.php" class="menu-item">';
               echo '<li class="underline-hover-effect">Logout</li>';
+            echo '</a>';
+            echo '<a href="./delete_account.php" class="menu-item">';
+              echo '<li class="underline-hover-effect error">Delete Account</li>';
             echo '</a>';
           }
           ?>

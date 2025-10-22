@@ -42,6 +42,9 @@
             echo '<a href="./database/logout.php" class="menu-item">';
               echo '<li class="underline-hover-effect">Logout</li>';
             echo '</a>';
+            echo '<a href="./database/delete_account.php" class="menu-item">';
+              echo '<li class="underline-hover-effect error">Delete Account</li>';
+            echo '</a>';
           }
           ?>
         </ul>
