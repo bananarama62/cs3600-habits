@@ -103,7 +103,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_account'])) {
     <div class="content">
       <?php
       session_start();
-      echo '<h1>Login</h1>';
+      echo '<h1>Delete Account</h1>';
       echo '<div id="submission-message-holder"><p></p></div>';
       echo '<h2>You are currently logged in as '.$_SESSION["username"];
       echo '<form method="post" class="form-control">';
